@@ -1,0 +1,65 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/kettleweb?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 123456
+    # 参数配置
+    hikari:
+      pool-name: hikariPool
+      minimum-idle: 2
+      maximum-pool-size: 50
+      idle-timeout: 10000
+      max-lifetime: 1800000
+      connection-test-query: SELECT 1
+      connection-timeout: 100000
+      auto-commit: false
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  http:
+    encoding:
+      force: true
+  # 模板引擎
+  jetbrick:
+    template:
+      # 该属性必须配置为true，不然不会加载改视图处理器
+      # 没有特别要求其他默认即可
+      enabled: true
+      # 是否启用页面缓存
+      cache: false
+      # 页面默认编码方式，默认utf-8
+      charset: UTF-8
+      # 该试图处理器的优先级，默认最低
+      order: 1
+      # 视图类型，默认text/html
+      content-type: text/html; charset=utf-8
+      # 默认 templates/
+      prefix: templates/
+      # 默认 .html
+      suffix: .html
+      # 一个map配置集合
+      config:
+      # jetx.autoscan.packages: cn.lkangle.jet.methods
+
+kettle:
+  # 该线程池会优先充满至最大的线程数（JDK默认优先将任务提交到队列，队列满了再充满至最大的线程数）
+  pool:
+    # 线程池前缀
+    namePrefix: kettleJobPool
+    # 核心线程数
+    coreThreads: 20
+    # 最大的线程数
+    maxThreads: 50
+    # 队列容量
+    queueCapacity: 100
+    # 5分钟空闲则释放
+    keepAliveTimeMin: 5
