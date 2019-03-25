@@ -1,17 +1,43 @@
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-    <h1 class="h2">主页</h1>
-    <div class="btn-toolbar mb-2 mb-md-0">
-        <div class="btn-group mr-2">
-            <button class="btn btn-sm btn-outline-secondary">Share</button>
-            <button class="btn btn-sm btn-outline-secondary">Export</button>
-        </div>
-        <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
-            <span data-feather="calendar"></span>
-            This week
-        </button>
+<h1 style="text-align: center">任务监控</h1>
+<div class="container" style="margin-top: 20px;">
+    <div id="dashboard" class="row">
     </div>
 </div>
-<!-- data -->
-<div>
+<script>
+    $(function () {
+        const statusObj = {
+            '等待运行': 'panel-default',
+            '运行中': 'panel-info',
+            '成功': 'panel-success',
+            '失败': 'panel-danger'
+        }
 
-</div>
+        $.get('/api/jobHistory/findGroupByStatus', function (result) {
+            if (result.success) {
+                const data = result.data
+                for (let index = 0; index < data.length; index++) {
+                    const element = data[index];
+                    const clazz = statusObj[element.status]
+                    const html = [
+                        '<div class="col-md-6">',
+                        '<div class="panel ',
+                        clazz,
+                        '">',
+                        '<div class="panel-heading">',
+                        element.status,
+                        '</div>',
+                        '<div class="panel-body">',
+                        element.count,
+                        '</div>',
+                        '</div>',
+                        '</div>',
+                        '</div>'
+                    ].join('')
+                    $('#dashboard').prepend(html)
+                }
+            } else {
+                toastr.error(result.message)
+            }
+        }, 'json')
+    })
+</script>

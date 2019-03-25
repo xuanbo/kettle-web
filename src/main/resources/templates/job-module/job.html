@@ -10,175 +10,177 @@
     </div>
 </div>
 <script>
-    operateEvents = {
-        'click .remove': function (e, value, row, index) {
-            const id = row.id
-            Swal.fire({
-                title: '警告',
-                text: "删除之后无法恢复",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: '坚持删除',
-                cancelButtonText: '取消'
-            }).then((result) => {
-                if (result.value) {
-                    $.ajax({
-                        type: "DELETE",
-                        url: "/api/job/" + id,
-                        dataType: "json",
-                        success: function (result) {
-                            if (result.success) {
-                                toastr.success('删除成功')
-                                $('#table').bootstrapTable('refresh')
-                            } else {
-                                toastr.error(result.message)
+    $(function () {
+        operateEvents = {
+            'click .remove': function (e, value, row, index) {
+                const id = row.id
+                Swal.fire({
+                    title: '警告',
+                    text: "删除之后无法恢复",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: '坚持删除',
+                    cancelButtonText: '取消'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            type: "DELETE",
+                            url: "/api/job/" + id,
+                            dataType: "json",
+                            success: function (result) {
+                                if (result.success) {
+                                    toastr.success('删除成功')
+                                    $('#table').bootstrapTable('refresh')
+                                } else {
+                                    toastr.error(result.message)
+                                }
                             }
-                        }
-                    })
-                }
-            })
-        },
-        'click .exec': function (e, value, row, index) {
-            const id = row.id
-            Swal.fire({
-                title: '警告',
-                text: "确定要执行该任务吗？",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: '坚持执行',
-                cancelButtonText: '取消'
-            }).then((result) => {
-                if (result.value) {
-                    $.ajax({
-                        type: "POST",
-                        url: "/api/job/" + id + "/exec",
-                        dataType: "json",
-                        success: function (result) {
-                            if (result.success) {
-                                toastr.success('开始执行任务')
-                            } else {
-                                toastr.error(result.message)
-                            }
-                        }
-                    })
-                }
-            })
-        }
-    }
-
-    $('#table').bootstrapTable({
-        locale: 'zh-CN',
-        columns: [{
-            field: 'id',
-            title: 'ID'
-        }, {
-            field: 'name',
-            title: '名称'
-        }, {
-            field: 'groupId',
-            title: '任务组ID'
-        }, {
-            field: 'path',
-            title: '路径',
-            editable: {
-                type: 'text',
-                title: 'ScanWeight'
-            }
-        }, {
-            field: 'description',
-            title: '描述',
-            editable: {
-                type: 'text',
-                title: 'ScanWeight'
-            }
-        }, {
-            field: 'createAt',
-            title: '创建时间'
-        }, {
-            field: 'updateAt',
-            title: '更新时间'
-        }, {
-            field: 'operate',
-            title: '操作',
-            events: operateEvents,
-            formatter: operateFormatter
-        }],
-        onEditableSave: function (field, row, oldValue, $el) {
-            const data = Object.assign({}, row)
-            delete data.name
-            delete data.groupId
-            delete data.createAt
-            delete data.updateAt
-            $.ajax({
-                type: "PUT",
-                url: "/api/job",
-                contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify(data),
-                dataType: "json",
-                success: function (result) {
-                    if (result.success) {
-                        toastr.success('更新成功')
-                    } else {
-                        toastr.error(result.message)
-                        // 恢复原始值
-                        row[field] = oldValue
-                        $('#table').bootstrapTable('updateByUniqueId', {
-                            id: row.id,
-                            row: row
                         })
                     }
+                })
+            },
+            'click .exec': function (e, value, row, index) {
+                const id = row.id
+                Swal.fire({
+                    title: '警告',
+                    text: "确定要执行该任务吗？",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: '坚持执行',
+                    cancelButtonText: '取消'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            type: "POST",
+                            url: "/api/job/" + id + "/exec",
+                            dataType: "json",
+                            success: function (result) {
+                                if (result.success) {
+                                    toastr.success('开始执行任务')
+                                } else {
+                                    toastr.error(result.message)
+                                }
+                            }
+                        })
+                    }
+                })
+            }
+        }
+
+        $('#table').bootstrapTable({
+            locale: 'zh-CN',
+            columns: [{
+                field: 'id',
+                title: 'ID'
+            }, {
+                field: 'name',
+                title: '名称'
+            }, {
+                field: 'groupId',
+                title: '任务组ID'
+            }, {
+                field: 'path',
+                title: '路径',
+                editable: {
+                    type: 'text',
+                    title: 'ScanWeight'
                 }
-            })
+            }, {
+                field: 'description',
+                title: '描述',
+                editable: {
+                    type: 'text',
+                    title: 'ScanWeight'
+                }
+            }, {
+                field: 'createAt',
+                title: '创建时间'
+            }, {
+                field: 'updateAt',
+                title: '更新时间'
+            }, {
+                field: 'operate',
+                title: '操作',
+                events: operateEvents,
+                formatter: operateFormatter
+            }],
+            onEditableSave: function (field, row, oldValue, $el) {
+                const data = Object.assign({}, row)
+                delete data.name
+                delete data.groupId
+                delete data.createAt
+                delete data.updateAt
+                $.ajax({
+                    type: "PUT",
+                    url: "/api/job",
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(data),
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.success) {
+                            toastr.success('更新成功')
+                        } else {
+                            toastr.error(result.message)
+                            // 恢复原始值
+                            row[field] = oldValue
+                            $('#table').bootstrapTable('updateByUniqueId', {
+                                id: row.id,
+                                row: row
+                            })
+                        }
+                    }
+                })
+            }
+        })
+
+        function queryParams(params) {
+            if (params.search) {
+                params.name = params.search
+            }
+            params.page = params.offset / params.limit
+            params.size = params.limit
+            params.sort = 'createAt,desc'
+            delete params.search
+            delete params.offset
+            delete params.limit
+            delete params.order
+            return params
         }
+
+        function responseHandler(result) {
+            const resp = JSON.parse(result)
+            if (resp.success) {
+                const data = resp.data
+                return data
+            }
+            return { content: [], totalElements: 0 }
+        }
+
+        function operateFormatter(value, row, index) {
+            return [
+                '<a class="remove" title="Remove">',
+                '<i class="fa fa-trash"></i>',
+                '</a>',
+                '&nbsp;&nbsp;&nbsp;&nbsp;',
+                '<a class="exec" title="Exec">',
+                '<i class="fa fa-play"></i>',
+                '</a>'
+            ].join('')
+        }
+
+        // 新增按钮
+        $('.bootstrap-table > .fixed-table-toolbar > .btn-group').prepend(
+            [
+                '<button class="btn btn-default" data-toggle="modal" data-target="#addModal">',
+                '<i class="fa fa-plus"></i>',
+                '</button>'
+            ].join('')
+        )
     })
-
-    function queryParams(params) {
-        if (params.search) {
-            params.name = params.search
-        }
-        params.page = params.offset / params.limit
-        params.size = params.limit
-        params.sort = 'createAt,desc'
-        delete params.search
-        delete params.offset
-        delete params.limit
-        delete params.order
-        return params
-    }
-
-    function responseHandler(result) {
-        const resp = JSON.parse(result)
-        if (resp.success) {
-            const data = resp.data
-            return data
-        }
-        return { content: [], totalElements: 0 }
-    }
-
-    function operateFormatter(value, row, index) {
-        return [
-            '<a class="remove" title="Remove">',
-            '<i class="fa fa-trash"></i>',
-            '</a>',
-            '&nbsp;&nbsp;&nbsp;&nbsp;',
-            '<a class="exec" title="Exec">',
-            '<i class="fa fa-play"></i>',
-            '</a>'
-        ].join('')
-    }
-
-    // 新增按钮
-    $('.bootstrap-table > .fixed-table-toolbar > .btn-group').prepend(
-        [
-            '<button class="btn btn-default" data-toggle="modal" data-target="#addModal">',
-            '<i class="fa fa-plus"></i>',
-            '</button>'
-        ].join('')
-    )
 </script>
 
 <!-- 新增 -->
