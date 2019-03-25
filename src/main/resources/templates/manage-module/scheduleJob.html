@@ -4,7 +4,7 @@
         <table id="table" data-toggle="table" data-unique-id="id" data-show-columns="true" data-show-refresh="true"
             data-show-toggle="true" data-search="true" data-search-on-enter-key="true" data-pagination="true"
             data-side-pagination="server" data-page-list="[10, 25, 50, 100]" data-total-field="totalElements"
-            data-data-field="content" data-url="/api/jobVariable" data-query-params="queryParams" data-data-type="text"
+            data-data-field="content" data-url="/api/scheduleJob" data-query-params="queryParams" data-data-type="text"
             data-response-handler="responseHandler">
         </table>
     </div>
@@ -26,7 +26,7 @@
                 if (result.value) {
                     $.ajax({
                         type: "DELETE",
-                        url: "/api/jobVariable/" + id,
+                        url: "/api/scheduleJob/" + id,
                         dataType: "json",
                         success: function (result) {
                             if (result.success) {
@@ -51,19 +51,15 @@
             field: 'jobId',
             title: '任务ID'
         }, {
-            field: 'k',
-            title: '变量名',
+            field: 'cron',
+            title: 'cron表达式',
             editable: {
                 type: 'text',
                 title: 'ScanWeight'
             }
         }, {
-            field: 'v',
-            title: '变量值',
-            editable: {
-                type: 'text',
-                title: 'ScanWeight'
-            }
+            field: 'beanName',
+            title: 'bean名称'
         }, {
             field: 'description',
             title: '描述',
@@ -86,11 +82,12 @@
         onEditableSave: function (field, row, oldValue, $el) {
             const data = Object.assign({}, row)
             delete data.jobId
+            delete data.beanName
             delete data.createAt
             delete data.updateAt
             $.ajax({
                 type: "PUT",
-                url: "/api/jobVariable",
+                url: "/api/scheduleJob",
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(data),
                 dataType: "json",
@@ -164,16 +161,12 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="add-form-jobId">任务ID</label>
+                        <label for="add-form-jobId">名称</label>
                         <input id="add-form-jobId" class="form-control" placeholder="输入任务ID">
                     </div>
                     <div class="form-group">
-                        <label for="add-form-k">变量名</label>
-                        <input id="add-form-k" class="form-control" placeholder="输入变量名">
-                    </div>
-                    <div class="form-group">
-                        <label for="add-form-v">变量值</label>
-                        <input id="add-form-v" class="form-control" placeholder="输入变量值">
+                        <label for="add-form-cron">cron表达式</label>
+                        <input id="add-form-cron" class="form-control" placeholder="输入cron表达式">
                     </div>
                     <div class="form-group">
                         <label for="add-form-description">描述</label>
@@ -191,13 +184,12 @@
 <script>
     $('#add-form-submit').on('click', function () {
         const jobId = $('#add-form-jobId').val()
-        const k = $('#add-form-k').val()
-        const v = $('#add-form-v').val()
+        const cron = $('#add-form-cron').val()
         const description = $('#add-form-description').val()
-        const data = { jobId: jobId, k: k, v: v, description: description }
+        const data = { jobId: jobId, cron: cron, description: description, beanName: 'defaultJob' }
         $.ajax({
             type: "POST",
-            url: "/api/jobVariable",
+            url: "/api/scheduleJob",
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
             dataType: "json",

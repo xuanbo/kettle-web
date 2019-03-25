@@ -37,6 +37,12 @@ public class PageController {
         return "job-module/jobVariable";
     }
 
+
+    @GetMapping("/manage-module/scheduleJob.html")
+    public String scheduleJob() {
+        return "manage-module/scheduleJob";
+    }
+
     @GetMapping("/manage-module/jobHistory.html")
     public String jobHistory() {
         return "manage-module/jobHistory";

@@ -28,6 +28,30 @@ spring:
   http:
     encoding:
       force: true
+  # quartz配置
+  quartz:
+    job-store-type: jdbc
+    # 初始化数据库
+    jdbc.initialize-schema: NEVER
+    # 属性配置
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceId: AUTO
+            instanceName: clusteredScheduler
+          jobStore:
+            useProperties: false
+            tablePrefix: qrtz_
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            isClustered: true
+            clusterCheckinInterval: 10000
+          threadPool:
+            class: org.quartz.simpl.SimpleThreadPool
+            threadCount: 5
+            threadPriority: 5
+            threadsInheritContextClassLoaderOfInitializingThread: true
   # 模板引擎
   jetbrick:
     template:

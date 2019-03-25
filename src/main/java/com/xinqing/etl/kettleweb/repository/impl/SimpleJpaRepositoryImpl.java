@@ -60,6 +60,8 @@ public class SimpleJpaRepositoryImpl<T extends BaseDTO, ID> extends SimpleJpaRep
                 BeanUtils.copyProperties(entity, target, nullProperties);
                 fireUpdateDate(target);
                 em.merge(target);
+                // 复制回去。。
+                BeanUtils.copyProperties(target, entity);
                 return entity;
             } else {
                 // 虽然有ID，但数据库不存在

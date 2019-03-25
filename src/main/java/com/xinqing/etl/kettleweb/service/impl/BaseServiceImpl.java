@@ -10,6 +10,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -20,6 +21,7 @@ import java.util.Optional;
  * @since 1.0
  */
 @Service
+@Transactional
 public abstract class BaseServiceImpl<T extends BaseDTO> implements BaseService<T> {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
