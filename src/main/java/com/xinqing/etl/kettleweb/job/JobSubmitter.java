@@ -51,10 +51,7 @@ public class JobSubmitter {
      */
     public void submit(JobParam param) {
         kettleJobExecutor.execute(() -> {
-            Long jobHistoryId = null;
             try {
-                // job历史
-                jobHistoryId = jobPending(param);
                 // 创建job
                 JobMeta meta = new JobMeta(param.getPath(), null);
                 Job job = new Job(null, meta);
@@ -69,7 +66,7 @@ public class JobSubmitter {
                 }
                 // 全局job变量设置
                 job.setVariable(VARIABLE_JOB_ID, job.getId() + "");
-                job.setVariable(VARIABLE_JOB_HISTORY_ID, jobHistoryId + "");
+                job.setVariable(VARIABLE_JOB_HISTORY_ID, param.getHistoryId() + "");
 
                 // 添加listener
                 job.addJobEntryListener(logJobEntryListener);
@@ -81,31 +78,19 @@ public class JobSubmitter {
                 job.waitUntilFinished();
             } catch (Exception e) {
                 LOG.error("job submit unknown error", e);
-                if (jobHistoryId != null) {
-                    try {
-                        JobHistoryDTO jobHistory = new JobHistoryDTO();
-                        jobHistory.setId(jobHistoryId);
-                        jobHistory.setJobId(param.getId());
-                        jobHistory.setStatus(Status.FAILED.value());
-                        jobHistory.setLogText(e.getMessage());
-                        jobHistoryService.save(jobHistory);
-                    } catch (Exception ex) {
-                        // ignore
-                        LOG.error("job history save error", e);
-                    }
+                try {
+                    JobHistoryDTO jobHistory = new JobHistoryDTO();
+                    jobHistory.setId(param.getHistoryId());
+                    jobHistory.setJobId(param.getId());
+                    jobHistory.setStatus(Status.FAILED.value());
+                    jobHistory.setLogText(e.getMessage());
+                    jobHistoryService.save(jobHistory);
+                } catch (Exception ex) {
+                    // ignore
+                    LOG.error("job history save error", e);
                 }
             }
         });
-    }
-
-    private Long jobPending(JobParam param) {
-        JobHistoryDTO jobHistory = new JobHistoryDTO();
-        jobHistory.setJobId(param.getId());
-        jobHistory.setStatus(Status.PENDING.value());
-        jobHistoryService.save(jobHistory);
-        Long jobHistoryId = jobHistory.getId();
-        LOG.info("job submitted, job history id: {}", jobHistoryId);
-        return jobHistoryId;
     }
 
     /**

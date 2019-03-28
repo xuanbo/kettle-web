@@ -1,6 +1,5 @@
 package com.xinqing.etl.kettleweb.service;
 
-import com.xinqing.etl.kettleweb.domain.Api;
 import com.xinqing.etl.kettleweb.dto.JobDTO;
 
 /**
@@ -11,6 +10,6 @@ import com.xinqing.etl.kettleweb.dto.JobDTO;
  */
 public interface JobService extends BaseService<JobDTO> {
 
-    Api<?> exec(Long id);
+    void exec(Long id);
 
 }

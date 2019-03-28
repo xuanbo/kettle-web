@@ -17,6 +17,11 @@ public class JobParam implements Serializable {
     private Long id;
 
     /**
+     * job history id
+     */
+    private Long historyId;
+
+    /**
      * job path（kjb only）
      */
     private String path;
@@ -32,6 +37,14 @@ public class JobParam implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getHistoryId() {
+        return historyId;
+    }
+
+    public void setHistoryId(Long historyId) {
+        this.historyId = historyId;
     }
 
     public String getPath() {
