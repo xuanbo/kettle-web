@@ -60,4 +60,14 @@ public class JobHistoryDTO extends BaseDTO {
     public void setStatusMsg(String statusMsg) {
         this.statusMsg = statusMsg;
     }
+
+    @Override
+    public String toString() {
+        return "JobHistoryDTO{" +
+                "jobId=" + jobId +
+                ", status=" + status +
+                ", logText='" + logText + '\'' +
+                ", statusMsg='" + statusMsg + '\'' +
+                '}';
+    }
 }

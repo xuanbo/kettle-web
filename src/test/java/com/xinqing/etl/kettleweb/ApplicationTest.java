@@ -76,19 +76,18 @@ public class ApplicationTest {
         // 日志
         job.setLogLevel(LogLevel.ROWLEVEL);
         // 设置变量
-        // job.setParameterValue("TABLE_NAME", "FND_COMPANY_B");
         job.setVariable("TABLE_NAME", "FND_COMPANY_B");
         // 运行job
         job.start();
         job.addJobListener(new JobListener() {
             @Override
-            public void jobFinished(Job job) throws KettleException {
+            public void jobFinished(Job job) {
                 Result result = job.getResult();
                 LOG.info("end job[{}], log: {}", job.getName(), result.getLogText());
             }
 
             @Override
-            public void jobStarted(Job job) throws KettleException {
+            public void jobStarted(Job job) {
                 LOG.info("start job[{}]", job.getName());
             }
         });

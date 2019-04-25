@@ -39,7 +39,7 @@ public class SimpleJpaRepositoryImpl<T extends BaseDTO, ID> extends SimpleJpaRep
      * 通用save方法 ：新增/选择性更新
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public <S extends T> S save(S entity) {
         // 获取ID
         ID entityId = entityInformation.getId(entity);

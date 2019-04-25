@@ -12,6 +12,7 @@ import com.xinqing.etl.kettleweb.service.JobService;
 import com.xinqing.etl.kettleweb.service.JobVariableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
  * @since 1.0
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class JobServiceImpl extends BaseServiceImpl<JobDTO> implements JobService {
 
     @Autowired

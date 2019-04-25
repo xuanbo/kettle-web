@@ -21,7 +21,7 @@ import java.util.Optional;
  * @since 1.0
  */
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public abstract class BaseServiceImpl<T extends BaseDTO> implements BaseService<T> {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());

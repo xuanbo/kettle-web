@@ -3,7 +3,6 @@ package com.xinqing.etl.kettleweb.scheduler;
 import com.xinqing.etl.kettleweb.dto.ScheduleJobDTO;
 import com.xinqing.etl.kettleweb.util.ApplicationContextUtil;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -22,7 +21,7 @@ public class QuartzJobFactory extends QuartzJobBean {
     private static final Logger LOG = LoggerFactory.getLogger(QuartzJobFactory.class);
 
     @Override
-    protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
+    protected void executeInternal(JobExecutionContext context) {
         ScheduleJobDTO scheduleJob = (ScheduleJobDTO) context.getMergedJobDataMap().get("scheduleJob");
         String beanName = scheduleJob.getBeanName();
         Long jobId = scheduleJob.getJobId();
@@ -30,7 +29,7 @@ public class QuartzJobFactory extends QuartzJobBean {
         try {
             job = ApplicationContextUtil.getBean(beanName, AbstractJob.class);
         } catch (BeansException e) {
-            LOG.error("find bean error.s", e);
+            LOG.error("find bean error", e);
         }
         if (job != null) {
             job.doExecute(jobId);

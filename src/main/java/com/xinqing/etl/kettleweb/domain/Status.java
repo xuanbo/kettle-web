@@ -8,14 +8,29 @@ package com.xinqing.etl.kettleweb.domain;
  */
 public enum Status {
 
+    /**
+     * 未知状态
+     */
     UNKNOWN(-1, "未知状态"),
 
+    /**
+     * 等待运行
+     */
     PENDING(0, "等待运行"),
 
+    /**
+     * 运行中
+     */
     RUNNING(10, "运行中"),
 
+    /**
+     * 成功
+     */
     SUCCESS(20, "成功"),
 
+    /**
+     * 失败
+     */
     FAILED(30, "失败");
 
     private Integer status;

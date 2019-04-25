@@ -5,9 +5,9 @@ import java.util.concurrent.RejectedExecutionException;
 
 /**
  * LinkedTransferQueue 能保证更高性能，相比与LinkedBlockingQueue有明显提升
- *
+ * <p>
  * 1) 不过LinkedTransferQueue的缺点是没有队列长度控制，需要在外层协助控制
- *
+ * <p>
  * 代码来自motan rpc
  *
  * @author 奔波儿灞
@@ -25,7 +25,12 @@ public class ExecutorQueue extends LinkedTransferQueue<Runnable> {
         this.threadPoolExecutor = threadPoolExecutor;
     }
 
-    // 注：代码来源于 tomcat
+    /**
+     * 注：代码来源于 tomcat
+     *
+     * @param runnable Runnable
+     * @return
+     */
     public boolean force(Runnable runnable) {
         if (threadPoolExecutor.isShutdown()) {
             throw new RejectedExecutionException("Executor not running, can't force a command into the queue");
@@ -34,8 +39,14 @@ public class ExecutorQueue extends LinkedTransferQueue<Runnable> {
         return super.offer(runnable);
     }
 
-    // 注：tomcat的代码进行一些小变更
-    // 在提交的任务数超过poolSize, 而poolSize小于最大线程数的时候返回false, 让executor创建线程
+    /**
+     * 注：tomcat的代码进行一些小变更
+     * 在提交的任务数超过poolSize, 而poolSize小于最大线程数的时候返回false, 让executor创建线程
+     *
+     * @param runnable Runnable
+     * @return
+     */
+    @Override
     public boolean offer(Runnable runnable) {
         int poolSize = threadPoolExecutor.getPoolSize();
 

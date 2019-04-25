@@ -15,6 +15,11 @@ import java.util.List;
 @Repository
 public interface JobHistoryRepository extends BaseRepository<JobHistoryDTO> {
 
+    /**
+     * 查询任务状态
+     *
+     * @return 任务状态
+     */
     @Query(value = "SELECT status, count(1) as count FROM job_history GROUP BY status", nativeQuery = true)
     List<Object[]> findGroupByStatus();
 

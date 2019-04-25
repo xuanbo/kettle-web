@@ -52,4 +52,14 @@ public class ScheduleJobDTO extends BaseDTO {
     public void setBeanName(String beanName) {
         this.beanName = beanName;
     }
+
+    @Override
+    public String toString() {
+        return "ScheduleJobDTO{" +
+                "jobId=" + jobId +
+                ", cron='" + cron + '\'' +
+                ", description='" + description + '\'' +
+                ", beanName='" + beanName + '\'' +
+                '}';
+    }
 }

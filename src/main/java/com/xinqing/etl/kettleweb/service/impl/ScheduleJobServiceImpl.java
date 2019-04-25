@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 1.0
  */
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJobDTO> implements ScheduleJobService {
 
     @Autowired

@@ -10,6 +10,11 @@ import com.xinqing.etl.kettleweb.dto.JobDTO;
  */
 public interface JobService extends BaseService<JobDTO> {
 
+    /**
+     * 执行任务
+     *
+     * @param id 任务id
+     */
     void exec(Long id);
 
 }

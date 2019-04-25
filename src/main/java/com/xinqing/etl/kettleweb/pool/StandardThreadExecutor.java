@@ -21,13 +21,19 @@ public class StandardThreadExecutor extends ThreadPoolExecutor {
 
     public static final int DEFAULT_MAX_THREADS = 200;
 
-    // 1 minutes
+    /**
+     *  1 minutes
+     */
     public static final int DEFAULT_MAX_IDLE_TIME = 60 * 1000;
 
-    // 正在处理的任务数
+    /**
+     * 正在处理的任务数
+     */
     private AtomicInteger submittedTasksCount;
 
-    // 最大允许同时处理的任务数
+    /**
+     * 最大允许同时处理的任务数
+     */
     private int maxSubmittedTaskCount;
 
     public StandardThreadExecutor(int coreThreads, int maxThreads, long keepAliveTime, TimeUnit unit,
@@ -41,6 +47,7 @@ public class StandardThreadExecutor extends ThreadPoolExecutor {
         maxSubmittedTaskCount = queueCapacity + maxThreads;
     }
 
+    @Override
     public void execute(Runnable command) {
         int count = submittedTasksCount.incrementAndGet();
 
@@ -71,6 +78,7 @@ public class StandardThreadExecutor extends ThreadPoolExecutor {
         return maxSubmittedTaskCount;
     }
 
+    @Override
     protected void afterExecute(Runnable r, Throwable t) {
         submittedTasksCount.decrementAndGet();
     }

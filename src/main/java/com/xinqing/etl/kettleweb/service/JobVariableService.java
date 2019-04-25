@@ -12,6 +12,12 @@ import java.util.List;
  */
 public interface JobVariableService extends BaseService<JobVariableDTO> {
 
+    /**
+     * 根据job id查询任务变量
+     *
+     * @param jobId job id
+     * @return 任务变量
+     */
     List<JobVariableDTO> findByJobId(Long jobId);
 
 }

@@ -34,4 +34,12 @@ public class JobGroupDTO extends BaseDTO {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "JobGroupDTO{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

@@ -54,4 +54,14 @@ public class JobDTO extends BaseDTO {
     public void setPath(String path) {
         this.path = path;
     }
+
+    @Override
+    public String toString() {
+        return "JobDTO{" +
+                "name='" + name + '\'' +
+                ", groupId=" + groupId +
+                ", description='" + description + '\'' +
+                ", path='" + path + '\'' +
+                '}';
+    }
 }

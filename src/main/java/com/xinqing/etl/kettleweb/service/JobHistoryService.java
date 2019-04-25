@@ -13,5 +13,10 @@ import java.util.List;
  */
 public interface JobHistoryService extends BaseService<JobHistoryDTO> {
 
+    /**
+     * 查询任务状态
+     *
+     * @return 任务状态
+     */
     List<HistoryDashboard> findGroupByStatus();
 }

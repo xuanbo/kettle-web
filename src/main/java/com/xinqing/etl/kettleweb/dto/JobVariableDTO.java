@@ -52,4 +52,14 @@ public class JobVariableDTO extends BaseDTO {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "JobVariableDTO{" +
+                "jobId=" + jobId +
+                ", k='" + k + '\'' +
+                ", v='" + v + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

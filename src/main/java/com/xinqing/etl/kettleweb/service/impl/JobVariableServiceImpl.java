@@ -4,6 +4,7 @@ import com.xinqing.etl.kettleweb.dto.JobVariableDTO;
 import com.xinqing.etl.kettleweb.service.JobVariableService;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
  * @since 1.0
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class JobVariableServiceImpl extends BaseServiceImpl<JobVariableDTO> implements JobVariableService {
 
     @Override

@@ -23,6 +23,11 @@ public abstract class AbstractJob {
         logger.info("execute task end");
     }
 
+    /**
+     * 执行任务
+     *
+     * @param jobId job id
+     */
     protected abstract void doExecute(Long jobId);
 
 }

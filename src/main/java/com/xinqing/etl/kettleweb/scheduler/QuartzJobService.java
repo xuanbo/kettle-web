@@ -8,7 +8,6 @@ import org.quartz.JobDetail;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
-import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 1.0
  */
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class QuartzJobService {
 
     @Autowired
