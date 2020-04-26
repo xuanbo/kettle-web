@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -37,6 +38,14 @@ public class KettleConfiguration {
             LOG.error("init kettle env error", e);
             System.exit(-1);
         }
+    }
+
+    /**
+     * 销毁kettle运行环境
+     */
+    @PreDestroy
+    public void cleanup() {
+        KettleEnvironment.shutdown();
     }
 
     /**

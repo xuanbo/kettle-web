@@ -1,0 +1,13 @@
+*.html linguist-language=java
+*.js linguist-language=java
+*.css linguist-language=java
+*.scss linguist-language=java
+*.less linguist-language=java
+*.yml linguist-language=java
+*.json linguist-language=java
+*.svg linguist-language=java
+*.svg linguist-language=java
+*.eot linguist-language=java
+*.ttf linguist-language=java
+*.woff linguist-language=java
+*.woff2 linguist-language=java
