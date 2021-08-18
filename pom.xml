@@ -19,6 +19,8 @@
         <kettle.version>7.1.0.0-12</kettle.version>
         <hadoop.version>2.6.0</hadoop.version>
         <hive.version>1.2.1</hive.version>
+        <ojdbc8.version>12.2.0.1</ojdbc8.version>
+        <orai18n.version>12.1.0.2.0</orai18n.version>
     </properties>
 
     <repositories>
@@ -27,22 +29,15 @@
             <name>aliyun maven</name>
             <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
         </repository>
-        <!-- javascript -->
-        <repository>
-            <id>jabylon</id>
-            <name>jabylon maven</name>
-            <url>http://www.jabylon.org/maven/</url>
-        </repository>
-        <!-- Oracle -->
-        <repository>
-            <id>hand</id>
-            <name>hand maven</name>
-            <url>http://nexus.saas.hand-china.com/content/repositories/rdc/</url>
-        </repository>
         <repository>
             <id>pentaho</id>
             <name>pentaho maven</name>
-            <url>https://nexus.pentaho.org/content/groups/omni/</url>
+            <url>https://nexus.pentaho.org/repository/proxy-pentaho-public-release-group/</url>
+        </repository>
+        <repository>
+            <id>pentaho-3rd-party</id>
+            <name>pentaho-3rd-party maven</name>
+            <url>https://nexus.pentaho.org/repository/proxy-public-3rd-party-release/</url>
         </repository>
     </repositories>
 
@@ -142,11 +137,26 @@
             <artifactId>kettle-dbdialog</artifactId>
             <version>${kettle.version}</version>
         </dependency>
+        <dependency>
+            <groupId>pentaho</groupId>
+            <artifactId>pentaho-metadata</artifactId>
+            <version>${kettle.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>joda-time</groupId>
+                    <artifactId>joda-time</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
         <!-- Kettle javascript -->
         <dependency>
-            <groupId>org.mozilla</groupId>
-            <artifactId>javascript</artifactId>
+            <groupId>org.eclipse.birt.runtime.3_7_1</groupId>
+            <artifactId>org.mozilla.javascript</artifactId>
             <version>1.7.2</version>
         </dependency>
 
@@ -278,9 +288,14 @@
 
         <!-- Oracle -->
         <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc7</artifactId>
-            <version>12.1.0.2</version>
+            <groupId>com.oracle.database.jdbc</groupId>
+            <artifactId>ojdbc8</artifactId>
+            <version>${ojdbc8.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.easyproject</groupId>
+            <artifactId>orai18n</artifactId>
+            <version>${orai18n.version}</version>
         </dependency>
 
         <!-- Bootstrap -->

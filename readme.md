@@ -8,6 +8,13 @@
 * 任务并行执行
 * Web管理任务
 
+## 更新
+
+### 2021-08-18
+
+- 修复失效的 maven 私服，导致编译错误
+- 目前存在问题: database type with plugin id [HIVE2] couldn't be found!
+
 ## 展示
 
 界面用Bootstrap3和jQuery简单撸了下。
