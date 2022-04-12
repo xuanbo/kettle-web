@@ -17,7 +17,7 @@
         <spring.boot.version>2.2.0.RELEASE</spring.boot.version>
         <slf4j.version>1.7.25</slf4j.version>
         <kettle.version>7.1.0.0-12</kettle.version>
-        <hadoop.version>2.6.0</hadoop.version>
+        <hadoop.version>3.2.3</hadoop.version>
         <hive.version>1.2.1</hive.version>
         <ojdbc8.version>12.2.0.1</ojdbc8.version>
         <orai18n.version>12.1.0.2.0</orai18n.version>
