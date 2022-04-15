@@ -84,6 +84,7 @@
 
 * 由于本项目采用JAP，因此会自动建表，只需要创建好数据库。
 * quartz数据库脚本直接在quartz jar包中获取即可，例如`/org/quartz/impl/jdbcjobstore/tables_mysql_innodb.sql`
+* 表job_history的log_text字段长度不够，启动后调整为longblob类型
 
 ### 项目结构
 
