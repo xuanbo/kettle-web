@@ -82,7 +82,7 @@
 
 本项目为Spring Boot标准项目，clone到本地修改application.yml中的数据源配置即可。
 
-* 由于本项目采用JAP，因此会自动建表，只需要创建好数据库。
+* 由于本项目采用JPA，因此会自动建表，只需要创建好数据库。
 * quartz数据库脚本直接在quartz jar包中获取即可，例如`/org/quartz/impl/jdbcjobstore/tables_mysql_innodb.sql`
 * 表job_history的log_text字段长度不够，启动后调整为longblob类型
 
